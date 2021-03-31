@@ -18,12 +18,9 @@ final beratController = TextEditingController();
 String hitungBMI() {
   double tinggi = double.parse(tinggiController.text);
   double berat = double.parse(beratController.text);
-<<<<<<< HEAD
-=======
-  if(tinggi>100){
-    tinggi=tinggi/100;
+  if (tinggi > 100) {
+    tinggi = tinggi / 100;
   }
->>>>>>> ef6fcef5dffbc2fcc2e2fa7ca7542ccb8c762ab2
   double bmi = berat / (tinggi * tinggi);
   return bmi.toString();
 }
