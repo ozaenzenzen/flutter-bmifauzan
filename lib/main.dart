@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class Home extends StatefulWidget {
 
 final tinggiController = TextEditingController();
 final beratController = TextEditingController();
+
 String hitungBMI() {
   double tinggi = double.parse(tinggiController.text);
   double berat = double.parse(beratController.text);
@@ -40,7 +42,13 @@ String kategoriBMI(double hasilbmi) {
   return textbmi;
 }
 
+final formKey1 = GlobalKey<FormState>();
+final formKey2 = GlobalKey<FormState>();
+
+// final formKey = GlobalKey<FormState>();
 class _HomeState extends State<Home> {
+  // final formKey1 = GlobalKey<FormState>();
+  // final formKey2 = GlobalKey<FormState>();
   String bmi = "";
   String kategori = "";
   @override
@@ -70,21 +78,74 @@ class _HomeState extends State<Home> {
                   new Berat(),
                   new Container(
                     margin:
-                        new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        new EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     child: new ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: Colors.orange[400],
-                        minimumSize: Size(150, 40),
+                        minimumSize: Size(150, 45),
                       ),
                       child: new Text(
                         "Hitung",
-                        style: new TextStyle(color: Colors.black),
+                        style: new TextStyle(
+                          color: Colors.black,
+                          fontSize: 17,
+                        ),
                       ),
                       onPressed: () {
-                        setState(() {
-                          bmi = hitungBMI();
-                          kategori = kategoriBMI(double.parse(hitungBMI()));
-                        });
+                        if (formKey1.currentState.validate() ||
+                            formKey2.currentState.validate()) {
+                          setState(() {
+                            bmi = hitungBMI();
+                            kategori = kategoriBMI(double.parse(hitungBMI()));
+
+                            // showDialog(
+                            //     context: context,
+                            //     builder: (BuildContext context) {
+                            //       return CupertinoAlertDialog(
+                            //         title: new Text("Tidak Boleh Kosong"),
+                            //         actions: [
+                            //           CupertinoDialogAction(
+                            //             child: new Text("Ok"),
+                            //             onPressed: () {
+                            //               Navigator.of(context).pop();
+                            //             },
+                            //           ),
+                            //         ],
+                            //       );
+                            //     });
+                          });
+                        }
+
+                        // else
+                        // {
+                        //   setState(() {
+                        //     bmi = hitungBMI();
+                        //     kategori = kategoriBMI(double.parse(hitungBMI()));
+                        //   });
+                        // }
+                        // if (_formKey.currentState.validate()) {
+
+                        // } else {
+                        //   setState(() {
+                        //     showDialog(
+                        //       context: context,
+                        //       builder: (BuildContext context) {
+                        //         return CupertinoAlertDialog(
+                        //           title: new Text("Tidak Boleh Kosong"),
+                        //           actions: [
+                        //             CupertinoDialogAction(
+                        //               child: new Text("Ok"),
+                        //               onPressed: () {
+                        //                 Navigator.of(context).pop();
+                        //               },
+                        //             ),
+                        //           ],
+                        //         );
+                        //       });
+                        //     bmi = hitungBMI();
+                        //     kategori = kategoriBMI(double.parse(hitungBMI()));
+                        //   });
+                        // }
                       },
                     ),
                   ),
@@ -107,7 +168,10 @@ class _HomeState extends State<Home> {
   }
 }
 
+// final formKey = GlobalKey<FormState>();
+
 class Tinggi extends StatelessWidget {
+  //final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -127,18 +191,29 @@ class Tinggi extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.orange[400], width: 3.0),
           ),
-          child: new TextField(
-            keyboardType: TextInputType.number,
-            controller: tinggiController,
-            decoration: InputDecoration(
-              prefix: new Padding(
-                padding: new EdgeInsets.only(left: 15),
-              ),
-              hintText: "Masukan Tinggi Anda (contoh: 1.75)",
-              hintStyle: new TextStyle(
-                fontSize: 18,
-                fontFamily: "SF",
-                color: Colors.black26,
+          child: new Form(
+            key: formKey1,
+            child: new TextFormField(
+              // autovalidate: AutovalidateMode.always,
+              validator: (val) {
+                if (val.isEmpty || val == null) {
+                  return "Tinggi harus diisi!";
+                } else {
+                  return null;
+                }
+              },
+              keyboardType: TextInputType.number,
+              controller: tinggiController,
+              decoration: InputDecoration(
+                prefix: new Padding(
+                  padding: new EdgeInsets.only(left: 15),
+                ),
+                hintText: "Masukan Tinggi Anda (contoh: 1.75)",
+                hintStyle: new TextStyle(
+                  fontSize: 15,
+                  fontFamily: "SF",
+                  color: Colors.black26,
+                ),
               ),
             ),
           ),
@@ -149,6 +224,7 @@ class Tinggi extends StatelessWidget {
 }
 
 class Berat extends StatelessWidget {
+  // final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -168,18 +244,28 @@ class Berat extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             border: Border.all(color: Colors.orange[400], width: 3.0),
           ),
-          child: new TextField(
-            keyboardType: TextInputType.number,
-            controller: beratController,
-            decoration: InputDecoration(
-              prefix: new Padding(
-                padding: new EdgeInsets.only(left: 15),
-              ),
-              hintText: "Masukan Berat Anda",
-              hintStyle: new TextStyle(
-                fontSize: 18,
-                fontFamily: "SF",
-                color: Colors.black26,
+          child: new Form(
+            key: formKey2,
+            child: new TextFormField(
+              validator: (val) {
+                if (val.isEmpty || val == null || val == "") {
+                  return "Berat harus diisi!";
+                } else {
+                  return null;
+                }
+              },
+              keyboardType: TextInputType.number,
+              controller: beratController,
+              decoration: InputDecoration(
+                prefix: new Padding(
+                  padding: new EdgeInsets.only(left: 15),
+                ),
+                hintText: "Masukan Berat Anda",
+                hintStyle: new TextStyle(
+                  fontSize: 15,
+                  fontFamily: "SF",
+                  color: Colors.black26,
+                ),
               ),
             ),
           ),
