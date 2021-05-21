@@ -17,7 +17,11 @@ class Home extends StatefulWidget {
 final tinggiController = TextEditingController();
 final beratController = TextEditingController();
 
-String hitungBMI() {
+Object hitungBMI() {
+  // if (tinggiController == null || beratController == null) {
+  //   return CupertinoAlertDialog();
+  // } else if (tinggiController.text == " " || beratController.text == " ") {
+  // } else {}
   double tinggi = double.parse(tinggiController.text);
   double berat = double.parse(beratController.text);
   if (tinggi > 100) {
@@ -74,6 +78,40 @@ class _HomeState extends State<Home> {
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 25,
+                    ),
+                    alignment: Alignment.centerLeft,
+                    height: 130,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        new Text(
+                          "BMI Calculator \nfor your healthy life",
+                          textAlign: TextAlign.left,
+                          style: new TextStyle(
+                            fontFamily: "SF",
+                            fontSize: 40,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        new SizedBox(
+                          height: 10,
+                        ),
+                        new Text(
+                          "By Fauzan Akmal Mahdi",
+                          textAlign: TextAlign.left,
+                          style: new TextStyle(
+                            fontFamily: "SF",
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   new Tinggi(),
                   new Berat(),
                   new Container(
@@ -126,22 +164,22 @@ class _HomeState extends State<Home> {
                         // if (_formKey.currentState.validate()) {
 
                         // } else {
-                        //   setState(() {
-                        //     showDialog(
-                        //       context: context,
-                        //       builder: (BuildContext context) {
-                        //         return CupertinoAlertDialog(
-                        //           title: new Text("Tidak Boleh Kosong"),
-                        //           actions: [
-                        //             CupertinoDialogAction(
-                        //               child: new Text("Ok"),
-                        //               onPressed: () {
-                        //                 Navigator.of(context).pop();
-                        //               },
-                        //             ),
-                        //           ],
-                        //         );
-                        //       });
+                        // setState(() {
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (BuildContext context) {
+                        //       return CupertinoAlertDialog(
+                        //         title: new Text("Tidak Boleh Kosong"),
+                        //         actions: [
+                        //           CupertinoDialogAction(
+                        //             child: new Text("Ok"),
+                        //             onPressed: () {
+                        //               Navigator.of(context).pop();
+                        //             },
+                        //           ),
+                        //         ],
+                        //       );
+                        //     });
                         //     bmi = hitungBMI();
                         //     kategori = kategoriBMI(double.parse(hitungBMI()));
                         //   });
@@ -156,8 +194,20 @@ class _HomeState extends State<Home> {
               margin: new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
                 children: [
-                  new Text("Hasil BMI kamu adalah : " + bmi),
-                  new Text(kategori),
+                  new Text(
+                    "Hasil BMI kamu adalah : " + bmi,
+                    style: new TextStyle(
+                      fontFamily: "SF",
+                      fontSize: 15,
+                    ),
+                  ),
+                  new Text(
+                    kategori,
+                    style: new TextStyle(
+                      fontFamily: "SF",
+                      fontSize: 15,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -181,7 +231,7 @@ class Tinggi extends StatelessWidget {
           margin: new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: new Text(
             "Tinggi (meter):",
-            style: new TextStyle(fontSize: 18),
+            style: new TextStyle(fontSize: 17),
           ),
         ),
         new Container(
@@ -234,7 +284,7 @@ class Berat extends StatelessWidget {
           margin: new EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: new Text(
             "Berat (Kg):",
-            style: new TextStyle(fontSize: 18),
+            style: new TextStyle(fontSize: 17),
           ),
         ),
         new Container(
